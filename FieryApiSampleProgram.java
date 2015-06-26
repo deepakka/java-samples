@@ -92,7 +92,7 @@ public class FieryApiSampleProgram {
 		
 		
 		// Create the payload to make the login request.
-		String jsonPayloadforLogin = "{\"username\":\"" + username + "\",\"password\":\"" + password + "\",\"accessrights\":{\"a1\":\"" + apikey + "\"}}";
+		String jsonPayloadforLogin = "{\"username\":\"" + username + "\",\"password\":\"" + password + "\",\"accessrights\":\"" + apikey + "\"}";
 
 		// Initialize the Session Cookie to null. This cookie is used to make
 		// subsequent Fiery API calls once the login was successful.
@@ -118,7 +118,7 @@ public class FieryApiSampleProgram {
 		try {
 
 			// Connect to the Fiery API Login URL using HttpURL Connection.
-			connection = (HttpURLConnection) new URL(hostname + "/live/login")
+			connection = (HttpURLConnection) new URL(hostname + "/live/api/v2/login")
 				.openConnection();
 
 			// Set the HTTP Request Call type as POST.
@@ -188,7 +188,7 @@ public class FieryApiSampleProgram {
 		if (responseCode == 200 && sessionCookie != null) {
 
 			// Fiery API URL to Upload new Jobs.
-			String fileUploadURL = hostname + "/live/api/v1/jobs";
+			String fileUploadURL = hostname + "/live/api/v2/jobs";
 
 			// Create boundary object with the current timestamp in milli
 			// seconds.
@@ -259,7 +259,7 @@ public class FieryApiSampleProgram {
 		if (responseCode == 200) {
 			
 			// Get all the jobs in the Fiery.
-			connection = (HttpURLConnection) new URL(hostname + "/live/api/v1/jobs").openConnection();
+			connection = (HttpURLConnection) new URL(hostname + "/live/api/v2/jobs").openConnection();
 			
 			// Set the Request Type as Get.
 			connection.setRequestMethod("GET");
@@ -288,7 +288,7 @@ public class FieryApiSampleProgram {
 			System.out.println("JOb ID Retrieved is \t" + jobId);
 			
 			//Get details of single Job BY Id retrieved above.
-			connection = (HttpURLConnection) new URL(hostname + "/live/api/v1/jobs/" + jobId).openConnection();
+			connection = (HttpURLConnection) new URL(hostname + "/live/api/v2/jobs/" + jobId).openConnection();
 			
 			//Set the Request method as GET
 			connection.setRequestMethod("GET");
@@ -313,7 +313,7 @@ public class FieryApiSampleProgram {
 			System.out.println("Get Single Job By Id\t" + response.toString());
 
 			//Rip the Job with JobId. (Rip can only be performed only once the job is successfully uploaded into the fiery. While uploading large files please wait for the file upload process to complete.)
-			connection = (HttpURLConnection) new URL(hostname + "/live/api/v1/jobs/" + jobId + "/rip").openConnection();
+			connection = (HttpURLConnection) new URL(hostname + "/live/api/v2/jobs/" + jobId + "/rip").openConnection();
 			
 			//Set the Rip Method type as PUT
 			connection.setRequestMethod("PUT");
@@ -338,7 +338,7 @@ public class FieryApiSampleProgram {
 			
 			//Print a a job in Fiery based on the JobID. (Print can only be performed only once the job is successfully uploaded into the fiery. While uploading large files please wait for the file upload process to complete before performing the print operation.)
 			//If print is followed by Rip. The print operation can return false if a rip is in progress. Issue the print command only when the file is successfully uploaded to fiery and is not busy in the rip process. 
-			connection = (HttpURLConnection) new URL(hostname + "/live/api/v1/jobs/" + jobId + "/print").openConnection();
+			connection = (HttpURLConnection) new URL(hostname + "/live/api/v2/jobs/" + jobId + "/print").openConnection();
 			
 			//Set the  Method type as GET
 			connection.setRequestMethod("PUT");
@@ -367,7 +367,7 @@ public class FieryApiSampleProgram {
 			 if(responseCode==200){
 				 
 				 	//Get Print Preview Job BY Id.
-					connection = (HttpURLConnection) new URL(hostname+"/live/api/v1/jobs/" + jobId+ "/preview/1").openConnection();
+					connection = (HttpURLConnection) new URL(hostname+"/live/api/v2/jobs/" + jobId+ "/preview/1").openConnection();
 					
 					//Set the  Method type as GET
 					connection.setRequestMethod("GET");
@@ -393,7 +393,7 @@ public class FieryApiSampleProgram {
 
 			 
 			// Logout.
-			connection = (HttpURLConnection) new URL(hostname + "/live/logout").openConnection();
+			connection = (HttpURLConnection) new URL(hostname + "/live/api/v2/logout").openConnection();
 			
 			//Set the Request method as GET
 			connection.setRequestMethod("GET");
